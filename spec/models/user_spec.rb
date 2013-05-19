@@ -12,6 +12,8 @@ describe User do
     return_value = "hash value"
     BCrypt::Engine.stub(:generate_salt).and_return(salt)
     BCrypt::Engine.stub(:hash_secret).with(user.password,salt).and_return(return_value)
+    user.stub(:salt).and_return("salt")
+    user.stub(:id).and_return(1)
   end
 
   it "should encrypt password" do
@@ -27,10 +29,9 @@ describe User do
     expect { user.save }.to change { user.password }.to("")
   end
 
-  it "should match password correctly" do
-    user.stub(:salt).and_return("salt")
+  it "should authenticate" do
     user.password = "hash value"
-    user.match_password("password").should be_true  
+    User.stub(:find_by_username).with(user.username).and_return(user)
+    User.authenticate(user.username, "password").should == 1 
   end
-
 end

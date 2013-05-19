@@ -7,8 +7,14 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   after_save :empty_password
 
-  def match_password(password)
-    self.password == BCrypt::Engine.hash_secret(password, salt)
+
+  def self.authenticate(username, password) 
+    user = User.find_by_username(username)
+    if user && user.password == BCrypt::Engine.hash_secret(password, user.salt)
+      user.id
+    else
+      raise UserException.new("Authentication Failed")
+    end 
   end
 
   private
@@ -22,5 +28,4 @@ class User < ActiveRecord::Base
   def empty_password
     self.password = ""
   end
-
 end
