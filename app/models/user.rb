@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   
   attr_accessible :password, :username
 
+  private
   def encrypt_password
     if password.present?
       salt = BCrypt::Engine.generate_salt

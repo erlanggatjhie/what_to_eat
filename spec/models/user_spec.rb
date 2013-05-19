@@ -9,8 +9,8 @@ describe User do
     user = User.new(username: "username", password: "password")
     BCrypt::Engine.should_receive(:generate_salt).and_return("salt")
     BCrypt::Engine.should_receive(:hash_secret).with(user.password,"salt").and_return("hash value")
-    
-    expect { user.encrypt_password }.to change { user.password }.to("hash value")
+
+    expect { user.send(:encrypt_password) }.to change { user.password }.to("hash value")
   end
 
 end
