@@ -19,4 +19,7 @@ describe User do
     user.save  
   end
 
+  it "should empty password after saving" do
+    expect { user.save }.to change { user.password }.to("")
+  end
 end
