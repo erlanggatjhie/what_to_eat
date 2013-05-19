@@ -28,8 +28,9 @@ describe User do
   end
 
   it "should match password correctly" do
-  #  user.match_password("password").should be_true
-    
+    user.stub(:salt).and_return("salt")
+    user.password = "hash value"
+    user.match_password("password").should be_true  
   end
 
 end
