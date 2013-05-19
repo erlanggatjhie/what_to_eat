@@ -1,7 +1,7 @@
 class AdminsController < ApplicationController
   def login
     begin
-      User.authenticate(params[:username], params[:password])
+       session[:user_id] = User.authenticate(params[:username], params[:password])
     rescue UserException
 
     end
