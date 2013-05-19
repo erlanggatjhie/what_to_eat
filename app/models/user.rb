@@ -7,6 +7,10 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   after_save :empty_password
 
+  def match_password(password)
+    self.password == BCrypt::Engine.hash_secret(password, salt)
+  end
+
   private
   def encrypt_password
     if self.password.present?
