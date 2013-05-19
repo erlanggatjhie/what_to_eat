@@ -29,9 +29,19 @@ describe User do
     expect { user.save }.to change { user.password }.to("")
   end
 
-  it "should authenticate" do
-    user.password = "hash value"
-    User.stub(:find_by_username).with(user.username).and_return(user)
-    User.authenticate(user.username, "password").should == 1 
+  context "authenticating" do
+    before(:each) do
+      user.password = "hash value"
+      User.stub(:find_by_username).with(user.username).and_return(user)
+    end
+  
+    it "should authenticate" do
+      User.authenticate(user.username, "password").should == 1 
+    end
+
+    it "should not authenticate" do
+      BCrypt::Engine.stub(:hash_secret).with("wrong password","salt").and_return(nil)
+      expect { User.authenticate(user.username, "wrong password") }.to raise_error(UserException)
+    end
   end
 end
