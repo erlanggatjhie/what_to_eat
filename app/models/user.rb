@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   include BCrypt
   
   attr_accessible :password, :username
+  before_save :encrypt_password
 
   private
   def encrypt_password

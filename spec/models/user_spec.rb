@@ -13,4 +13,10 @@ describe User do
     expect { user.send(:encrypt_password) }.to change { user.password }.to("hash value")
   end
 
+  it "should invoke encrypt password while saving" do
+    user = User.new(username: "username", password: "password")
+    user.should_receive(:encrypt_password)
+    user.save  
+  end
+
 end
