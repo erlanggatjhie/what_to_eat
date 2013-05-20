@@ -1,3 +1,3 @@
 WhatToEat::Application.routes.draw do
-  match "/admin/login" => "admins#login"
+  match "/admin/authenticate" => "admins#authenticate"
 end

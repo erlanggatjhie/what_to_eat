@@ -1,10 +1,10 @@
 class AdminsController < ApplicationController
-  def login
+  def authenticate
     begin
-       session[:user_id] = User.authenticate(params[:username], params[:password])
+      session[:user_id] = User.authenticate(params[:username], params[:password])
+      render :action => 'show_all'
     rescue UserException
-
+      render :action => 'login'
     end
-    render :action => 'show_all'
   end
 end
