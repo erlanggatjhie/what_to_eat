@@ -34,4 +34,11 @@ describe AdminsController do
       response.should render_template(:login)
     end
   end
+
+  context "Display login page" do
+    it "should display login page" do
+      get :login
+      response.should render_template(:login)
+    end
+  end
 end

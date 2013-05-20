@@ -7,4 +7,7 @@ class AdminsController < ApplicationController
       render :action => 'login'
     end
   end
+
+  def login
+  end
 end
