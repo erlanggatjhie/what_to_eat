@@ -4,7 +4,7 @@ class AdminsController < ApplicationController
       session[:user_id] = User.authenticate(params[:username], params[:password])
       render :action => 'show_all'
     rescue UserException
-      render :action => 'login'
+      redirect_to action: :login
     end
   end
 

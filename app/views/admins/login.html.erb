@@ -1,0 +1,8 @@
+<h1>Admin Login</h1>
+<%= form_tag(controller: "admins", action: "authenticate", method: "post") do %>
+  <%= label_tag(:username, "Username : ") %>
+  <%= text_field_tag(:username) %><br />
+  <%= label_tag(:password, "Password : ") %>
+  <%= text_field_tag(:password) %>
+  <%= submit_tag("Login") %>
+<% end %>

@@ -30,8 +30,8 @@ describe AdminsController do
       session[:user_id].should be_nil
     end
 
-    it "should display show_all view" do
-      response.should render_template(:login)
+    it "should redirect to login page" do
+      response.should redirect_to(action: :login)
     end
   end
 
