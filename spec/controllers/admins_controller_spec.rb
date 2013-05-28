@@ -63,4 +63,11 @@ describe AdminsController do
       assigns(:restaurants).should_not be_nil
     end
   end
+
+  context "Logout" do
+    it "should logout" do
+      session[:user_id] = 1
+      expect { delete :logout }.to change { session[:user_id] }.to(nil)     
+    end
+  end
 end

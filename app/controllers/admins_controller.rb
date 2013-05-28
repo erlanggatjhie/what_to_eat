@@ -20,4 +20,9 @@ class AdminsController < ApplicationController
       redirect_to action: :login
     end
   end
+
+  def logout
+    session[:user_id] = nil
+    redirect_to action: :login
+  end
 end
