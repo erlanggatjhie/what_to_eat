@@ -5,7 +5,8 @@ describe AdminsController do
     before(:each) do 
       username  = "username"
       password = "password"
-      User.stub(:authenticate).with(username, password).and_return(1)  
+      User.stub(:authenticate).with(username, password).and_return(1) 
+      Restaurant.stub(:all).and_return([]) 
       post :authenticate, { username: username, password: password }
     end
 
@@ -14,7 +15,7 @@ describe AdminsController do
     end
 
     it "should display show_all view" do
-      response.should render_template(:show_all)
+      response.should redirect_to(action: :show_all)
     end
   end
 
@@ -26,7 +27,7 @@ describe AdminsController do
       post :authenticate, { username: username, password: password }
     end
 
-    it "should set session with user id" do
+    it "should not set session with user id" do
       session[:user_id].should be_nil
     end
 
@@ -39,6 +40,27 @@ describe AdminsController do
     it "should display login page" do
       get :login
       response.should render_template(:login)
+    end
+  end
+
+  context "Show All Restaurants" do
+    it "should redirected to login page when not login" do
+      get :show_all
+      response.should redirect_to(action: :login)
+    end
+
+    it "should show all restaurants page" do
+      session[:user_id] = 1
+      get :show_all
+      response.should render_template(:show_all)
+    end
+
+    it "should pass all restaurants" do
+      Restaurant.stub(:all).and_return([])
+      session[:user_id] = 1
+      get :show_all
+
+      assigns(:restaurants).should_not be_nil
     end
   end
 end

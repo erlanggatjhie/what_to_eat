@@ -1,0 +1,14 @@
+<h1>Admin Page</h1>
+<h2>Restaurant List</h2>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Location</th>
+  </tr>
+  <%= @restaurants.each do |restaurant| %>
+    <tr>
+      <td><%= restaurant.name %></td>
+      <td><%= restaurant.location %></td>
+    </tr>
+  <% end %>
+</table>

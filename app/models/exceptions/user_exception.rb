@@ -1,4 +1,4 @@
-class UserException < Exception
+class UserException < StandardError
   def initialize(message)
     @message = message
   end

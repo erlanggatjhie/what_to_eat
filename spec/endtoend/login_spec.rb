@@ -10,6 +10,7 @@ describe "Login Page" do
       fill_in "Password", with: "password"
       click_button "Login"
 
-      current_url.should == "http://www.example.com/admin/authenticate?method=post"
+      uri = URI.parse(current_url)
+      uri.path.should == show_all_path
   end
 end
