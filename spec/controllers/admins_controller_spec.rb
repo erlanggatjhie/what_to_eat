@@ -15,7 +15,7 @@ describe AdminsController do
     end
 
     it "should display show_all view" do
-      response.should redirect_to(action: :show_all)
+      response.should redirect_to show_all_path
     end
   end
 
@@ -32,7 +32,7 @@ describe AdminsController do
     end
 
     it "should redirect to login page" do
-      response.should redirect_to(action: :login)
+      response.should redirect_to login_path
     end
   end
 
@@ -40,27 +40,6 @@ describe AdminsController do
     it "should display login page" do
       get :login
       response.should render_template(:login)
-    end
-  end
-
-  context "Show All Restaurants" do
-    it "should redirected to login page when not login" do
-      get :show_all
-      response.should redirect_to(action: :login)
-    end
-
-    it "should show all restaurants page" do
-      session[:user_id] = 1
-      get :show_all
-      response.should render_template(:show_all)
-    end
-
-    it "should pass all restaurants" do
-      Restaurant.stub(:all).and_return([])
-      session[:user_id] = 1
-      get :show_all
-
-      assigns(:restaurants).should_not be_nil
     end
   end
 
