@@ -7,4 +7,5 @@ WhatToEat::Application.routes.draw do
 
   # Restaurant Controllers
   match "admin/show_all" => "restaurants#show_all", as: "show_all"  
+  match "admin/restaurant/:id/edit" => "restaurants#edit", as: "edit"
 end

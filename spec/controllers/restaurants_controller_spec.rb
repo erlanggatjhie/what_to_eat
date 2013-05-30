@@ -21,4 +21,29 @@ describe RestaurantsController do
       assigns(:restaurants).should_not be_nil
     end
   end
+
+  context "edit" do
+    it "should redirect to login page when not login" do
+      get :edit, id: 1
+      response.should redirect_to login_path
+    end
+
+    context "should display edit Restaurant page" do
+      before(:each) do
+        session[:user_id] = 1
+        @restaurant = mock_model(Restaurant)
+        Restaurant.stub(:find_by_id).with("1").and_return(@restaurant)
+        
+        get :edit, id: 1
+      end
+      
+      it "should render edit  page" do
+        response.should render_template(:edit)
+      end
+
+      it "should pass restaurant" do
+        assigns(:restaurant).should_not be_nil
+      end
+    end
+  end
 end
