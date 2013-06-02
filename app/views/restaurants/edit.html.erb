@@ -1,0 +1,11 @@
+<h1>Edit Restaurant</h1>
+
+<%= form_for(@restaurant, url: perform_edit_path(@restaurant), html: { method: :put }) do |f| %>
+  <%= f.label :name  %>
+  <%= f.text_field :name %>
+  <br />
+  <%= f.label :location %>
+  <%= f.text_field :location %>
+  <br />
+  <%= f.submit "Edit" %>
+<% end %>
