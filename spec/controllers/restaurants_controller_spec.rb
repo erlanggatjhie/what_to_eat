@@ -79,4 +79,50 @@ describe RestaurantsController do
       end
     end
   end
+
+  context "insert" do
+    it "should redirect to login page when not login" do
+      get :insert
+      response.should redirect_to login_path
+    end
+
+    it "should render insert new page" do
+      session[:user_id] = 1
+      get :insert
+      response.should render_template(:insert)      
+    end
+
+    it "should pass object to the view" do
+      session[:user_id] = 1
+      get :insert
+      assigns(:restaurant).should_not be_nil
+    end
+  end
+
+  context "new" do
+    it "should redirect to login page when not login" do
+      post :new, id: mock(Restaurant)
+      response.should redirect_to login_path
+    end
+
+    it "should insert new restaurant" do
+      session[:user_id] = 1
+      restaurant = mock(Restaurant)
+      restaurant.stub(:save).and_return(true)
+      Restaurant.stub(:new).and_return(restaurant)
+
+      post :new, restaurant: restaurant
+      response.should redirect_to show_all_path
+    end
+
+    it "should not insert restaurant when invalid" do
+      session[:user_id] = 1
+      restaurant = mock(Restaurant)
+      restaurant.stub(:save).and_return(false)
+      Restaurant.stub(:new).and_return(restaurant)
+
+      post :new, restaurant: restaurant
+      response.should redirect_to insert_path
+    end
+  end
 end

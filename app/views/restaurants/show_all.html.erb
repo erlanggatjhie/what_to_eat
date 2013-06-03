@@ -1,6 +1,7 @@
 <h1>Admin Page</h1>
 <%= link_to "Logout", { controller: "admins", action: "logout"} , method: :delete %>
 <h2>Restaurant List</h2>
+<%= link_to "Create new restaurant", insert_path %>
 <table>
   <tr>
     <th>Name</th>

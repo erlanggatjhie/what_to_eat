@@ -9,4 +9,6 @@ WhatToEat::Application.routes.draw do
   match "admin/show_all" => "restaurants#show_all", as: "show_all"  
   match "admin/restaurant/:id/edit" => "restaurants#edit", as: "edit"
   match "admin/restaurant/:id/perform_edit" => "restaurants#perform_edit", as: "perform_edit", via: :put
+  match "admin/restaurant/insert" => "restaurants#insert", as: "insert"
+  match "admin/restaurant/new" => "restaurants#new", as: "new", via: :post
 end

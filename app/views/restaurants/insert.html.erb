@@ -1,0 +1,10 @@
+<h1>Insert new restaurant</h1>
+<%= form_for(@restaurant, url: new_path(@restaurant), html: { method: :post }) do |f| %>
+  <%= f.label :name, "Name" %>
+  <%= f.text_field :name %>
+  <br />
+  <%= f.label :location, "Location" %>
+  <%= f.text_field :location %>
+  <br />
+  <%= f.submit "Insert" %>
+<% end %> 
