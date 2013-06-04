@@ -11,4 +11,5 @@ WhatToEat::Application.routes.draw do
   match "admin/restaurant/:id/perform_edit" => "restaurants#perform_edit", as: "perform_edit", via: :put
   match "admin/restaurant/insert" => "restaurants#insert", as: "insert"
   match "admin/restaurant/new" => "restaurants#new", as: "new", via: :post
+  match "admin/restaurant/:id/destroy" => "restaurants#destroy", as: "destroy", via: :delete
 end

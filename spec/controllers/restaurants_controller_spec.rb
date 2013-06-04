@@ -13,7 +13,7 @@ describe RestaurantsController do
       response.should render_template(:show_all)
     end
 
-    it "should pas all restaurants" do
+    it "should pass all restaurants" do
       Restaurant.stub(:all).and_return([])
       session[:user_id] = 1
       get :show_all
@@ -123,6 +123,23 @@ describe RestaurantsController do
 
       post :new, restaurant: restaurant
       response.should redirect_to insert_path
+    end
+  end
+
+  context "delete" do
+    it "redirect to login page when not login" do
+      delete :destroy, id: 1
+      response.should redirect_to login_path
+    end
+
+    it "should delete restaurant" do
+      session[:user_id] = 1
+      restaurant = mock(Restaurant)
+      Restaurant.stub(:find).and_return(restaurant)
+      restaurant.should_receive(:destroy)
+
+      delete :destroy, id: 1
+      response.should redirect_to show_all_path
     end
   end
 end

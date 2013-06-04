@@ -36,4 +36,10 @@ class RestaurantsController < ApplicationController
       redirect_to insert_path
     end
   end
+
+  def destroy
+    restaurant = Restaurant.find(params[:id])
+    restaurant.destroy
+    redirect_to show_all_path 
+  end
 end
