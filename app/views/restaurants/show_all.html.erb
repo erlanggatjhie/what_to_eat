@@ -12,6 +12,7 @@
       <td><%= restaurant.name %></td>
       <td><%= restaurant.location %></td>
       <td><%= link_to "edit", edit_path(restaurant.id), class: "edit"  %></td>
+      <td><%= link_to "delete", destroy_path(restaurant.id), class: "delete", method: :delete %>
     </tr>
   <% end %>
 </table>
