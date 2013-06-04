@@ -61,7 +61,7 @@ describe RestaurantsController do
         @restaurant.stub(:update_attributes).and_return(true)
         Restaurant.stub(:find).and_return(@restaurant)
 
-        put :perform_edit, id: @restaurant, restaurant: @params
+        put :perform_edit, {id: @restaurant, restaurant: @params}
         response.should redirect_to show_all_path
       end
     end
@@ -74,7 +74,7 @@ describe RestaurantsController do
         @restaurant.stub(:update_attributes).and_return(false)
         Restaurant.stub(:find).and_return(@restaurant)
 
-        put :perform_edit, id: @restaurant, restaurant: @params
+        put :perform_edit, {id: @restaurant, restaurant: @params}
         response.should redirect_to edit_path(@restaurant)
       end
     end

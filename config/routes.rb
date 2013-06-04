@@ -1,7 +1,7 @@
 WhatToEat::Application.routes.draw do
 
   # Admin Controllers
-  match "/admin/authenticate" => "admins#authenticate"
+  match "/admin/authenticate" => "admins#authenticate", as: "authenticate"
   match "/admin/login" => "admins#login", as: 'login'
   match "/admin/logout" => "admins#logout", via: :delete
 
