@@ -17,5 +17,20 @@ describe AdminsController do
       end
     end
   end
+
+  context "logout" do
+    before(:each) do
+      session[:user_id] = 1
+      delete :logout
+    end
+
+    it "should set user session into nil" do
+      session[:user_id].should be_nil
+    end
+
+    it "should redirect to login path" do
+      response.should redirect_to login_path
+    end
+  end
 end
 
