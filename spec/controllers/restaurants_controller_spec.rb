@@ -142,4 +142,56 @@ describe RestaurantsController do
       response.should redirect_to show_all_path
     end
   end
+
+  context "index" do
+      before(:each) do
+        get :index
+      end
+
+      it "should render index page" do
+        response.should render_template(:index)
+      end
+  end
+
+  context "show_random_restaurant" do
+    context "when valid" do
+      before(:each) do
+        restaurant = Restaurant.new(name: "restaurant", location: "location")
+        Restaurant.stub(:count).and_return(1)
+        Random.stub(:rand).with(1).and_return(1)
+        Restaurant.stub(:offset).and_return(Restaurant)
+        Restaurant.stub(:first).and_return(restaurant)
+        post :show_random_restaurant
+      end
+
+      it "should render show restaurant" do
+        response.should render_template(:show_random_restaurant)
+      end
+
+      it "should assign restaurant variable" do
+        assigns(:restaurant).should_not be_nil
+      end
+
+      it "should assign valid restaurant variable" do
+        restaurant = assigns(:restaurant)
+        restaurant.name.should == "restaurant"
+        restaurant.location.should == "location"
+      end
+    end
+
+    context "when invalid" do
+      before(:each) do
+        Restaurant.stub(:count).and_return(0)
+        post :show_random_restaurant
+      end
+
+      it "should render show restaurant" do
+        response.should render_template(:show_random_restaurant)
+      end
+
+      it "should assign restaurant variable" do
+        assigns(:restaurant).should be_nil
+      end
+    end
+  end
 end

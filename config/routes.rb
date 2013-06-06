@@ -1,4 +1,5 @@
 WhatToEat::Application.routes.draw do
+  root :to => "restaurants#index"
 
   # Admin Controllers
   match "/admin/authenticate" => "admins#authenticate", as: "authenticate"
@@ -12,4 +13,6 @@ WhatToEat::Application.routes.draw do
   match "admin/restaurant/insert" => "restaurants#insert", as: "insert"
   match "admin/restaurant/new" => "restaurants#new", as: "new", via: :post
   match "admin/restaurant/:id/destroy" => "restaurants#destroy", as: "destroy", via: :delete
+  match "index" => "restaurants#index", via: :get
+  match "decide" => "restaurants#show_random_restaurant", via: :post
 end

@@ -162,4 +162,43 @@ describe RestaurantsController do
       end
     end
   end
+
+  context "index" do
+    it "should render index template" do
+      get :index
+      response.should render_template(:index)
+    end
+  end
+
+  context "show_random_restaurant" do
+    context "when there is a restaurant" do
+      before(:each) do
+        Restaurant.create(name: "Restaurant 1", location: "Location 1")
+        Restaurant.create(name: "Restaurant 2", location: "Location 2")
+        post :show_random_restaurant
+      end
+
+      it "should render show random restaurant template" do
+        response.should render_template(:show_random_restaurant)
+      end
+
+      it "should assign restaurant parameter" do
+        assigns(:restaurant).should_not be_nil
+      end
+    end
+    
+    context "when there is no restaurant" do 
+      before(:each) do
+        post :show_random_restaurant
+      end
+
+      it "should render show random restaurant template" do
+        response.should render_template(:show_random_restaurant)
+      end
+
+      it "should assign restaurant parameter" do
+        assigns(:restaurant).should be_nil
+      end
+    end
+  end
 end

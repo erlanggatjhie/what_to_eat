@@ -1,5 +1,5 @@
 class RestaurantsController < ApplicationController
-  before_filter :require_login
+  before_filter :require_login, except: [:index, :show_random_restaurant]
 
   def show_all
     @restaurants = Restaurant.all
@@ -42,4 +42,15 @@ class RestaurantsController < ApplicationController
     restaurant.destroy
     redirect_to show_all_path 
   end
+
+  def index
+  end
+
+  def show_random_restaurant
+    total_restaurant_count = Restaurant.count
+
+    if total_restaurant_count > 0
+      @restaurant = Restaurant.offset(Random.rand(total_restaurant_count)).first
+    end
+  end 
 end
