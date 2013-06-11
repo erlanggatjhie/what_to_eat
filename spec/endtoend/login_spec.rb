@@ -1,16 +1,14 @@
 require 'spec_helper'
+require 'endtoend/pages/login_page'
 
 describe "Login Page" do
   subject { page }
   it "Should login successfully" do
       user = User.create(username: "test", password: "password")
 
-      visit login_path
-      fill_in "Username", with: user.username
-      fill_in "Password", with: "password"
-      click_button "Login"
+      login_page = LoginPage.new(page)
+      login_page.go_to_page
 
-      uri = URI.parse(current_url)
-      uri.path.should == show_all_path
+      login_page.login "test", "password"
   end
 end

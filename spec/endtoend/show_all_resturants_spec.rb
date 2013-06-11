@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'endtoend/pages/login_page'
 
 describe "Show All Restaurants" do
   subject { page }
@@ -8,16 +9,10 @@ describe "Show All Restaurants" do
     Restaurant.create(name: "Restaurant 1", location: "Earth")
     Restaurant.create(name: "Restaurant 2", location: "Mars")
 
-    visit login_path
-    fill_in "Username", with: "username"
-    fill_in "Password", with: "password"
-    click_button "Login"
-
-    should have_selector("th", text: /^Name$/)
-    should have_selector("th", text: /^Location$/)
-    should have_selector("td", text: /^Restaurant 1$/)
-    should have_selector("td", text: /^Restaurant 2$/)
-    should have_selector("td", text: /^Earth$/)
-    should have_selector("td", text: /^Mars$/)
+    login_page = LoginPage.new(page)
+    login_page.go_to_page
+    show_all_page = login_page.login "username", "password"
+    show_all_page.should_display_restaurant "Restaurant 1", "Earth"
+    show_all_page.should_display_restaurant "Restaurant 2", "Mars"
   end
 end

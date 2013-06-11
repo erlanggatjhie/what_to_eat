@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'endtoend/pages/login_page'
 
 describe "delete restaurant" do
   subject { page }
@@ -8,15 +9,12 @@ describe "delete restaurant" do
 
     restaurant = Restaurant.create(name: "Restaurant", location: "Location")
 
-    visit login_path
-    fill_in "Username", with: "test"
-    fill_in "Password", with: "password"
-    click_button "Login"
+    login_page = LoginPage.new(page)
+    login_page.go_to_page
+    show_all_page = login_page.login "test", "password"
 
-    first(".delete").click
-
-    should_not have_selector("td", /^Restaurant$/)
-    should_not have_selector("td", /^Location$/)
+    show_all_page.delete_first_restaurant
+    show_all_page.should_not_display_restaurant("Restaurant", "Location")
   end
 end
 

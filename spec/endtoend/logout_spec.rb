@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'endtoend/pages/login_page'
 
 describe "Logout" do
   subject { page }
@@ -6,15 +7,10 @@ describe "Logout" do
   it "should log out successfully" do 
     User.create(username: "username", password: "password")
 
-    visit login_path
-    fill_in "Username", with: "username"
-    fill_in "Password", with: "password"
-    click_button "Login"
-
-    click_on "Logout"
-
-    uri = URI.parse(current_url)
-
-    uri.path.should == login_path
+    login_page = LoginPage.new(page)
+    login_page.go_to_page
+    
+    show_all_page = login_page.login "username", "password"
+    show_all_page.logout
   end
 end

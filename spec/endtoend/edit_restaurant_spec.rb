@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'endtoend/pages/login_page'
 
 describe "edit restaurant scenario" do
   subject { page }
@@ -8,23 +9,17 @@ describe "edit restaurant scenario" do
     restaurant1 = Restaurant.create(name: "restaurant", location: "location")
     restaurant2 = Restaurant.create(name: "restaurant2", location: "location2")
 
-    visit login_path
-    fill_in "Username", with: user.username
-    fill_in "Password", with: "password"
-    click_button "Login"
 
-    first(".edit").click
+    login_page = LoginPage.new(page)
+    login_page.go_to_page
+    show_all_page = login_page.login "test", "password"
+   
+    edit_page = show_all_page.edit_first_restaurant 
     
-    fill_in "Name", with: "new restaurant"
-    fill_in "Location", with: "new location"
-    click_button "Edit"
-
-    updated_restaurant = Restaurant.find_by_id(restaurant1.id)
-    
-    updated_restaurant.name.should == "new restaurant"
-    updated_restaurant.location.should == "new location"
-
-    should have_selector("td", text: /^new restaurant$/)
-    should have_selector("td", text: /^new location$/)
+    edit_page.enter_new_name "new restaurant"
+    edit_page.enter_new_location "new location"
+  
+    show_all_page = edit_page.click_edit_button
+    show_all_page.should_display_restaurant "new restaurant", "new location"
   end
 end

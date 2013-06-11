@@ -13,6 +13,6 @@ WhatToEat::Application.routes.draw do
   match "admin/restaurant/insert" => "restaurants#insert", as: "insert"
   match "admin/restaurant/new" => "restaurants#new", as: "new", via: :post
   match "admin/restaurant/:id/destroy" => "restaurants#destroy", as: "destroy", via: :delete
-  match "index" => "restaurants#index", via: :get
-  match "decide" => "restaurants#show_random_restaurant", via: :post
+  match "index" => "restaurants#index", as: "index", via: :get
+  match "decide" => "restaurants#show_random_restaurant", as: "decide_restaurant", via: :post
 end
