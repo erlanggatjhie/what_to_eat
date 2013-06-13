@@ -9,6 +9,7 @@ gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'sqlite3'
 
 group :development, :test do
+  gem "minitest"
   gem "capybara", "~> 2.1.0"
   gem 'rspec-rails', '~> 2.0'
 end
