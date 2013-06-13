@@ -6,9 +6,12 @@ gem 'bcrypt-ruby', :require => 'bcrypt'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+group :production do
+  gem "pg"
+end
 
 group :development, :test do
+  gem 'sqlite3'
   gem "minitest"
   gem "capybara", "~> 2.1.0"
   gem 'rspec-rails', '~> 2.0'
